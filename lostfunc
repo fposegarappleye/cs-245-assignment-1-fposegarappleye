@@ -1,0 +1,143 @@
+public static int findJudge(int N, int [][] trust) {
+  // problem seems more complex than it is at first
+  // until you realize that the judge can be found by looking for the
+  // citizen who trusts nobody.
+  int untrusters = 0;
+  int judgePos = 0;
+
+  for(int i = 0 ; i < N ; i++) {
+    // Grab a row to look at it
+    int[] citizen = trust[i];
+
+    if(hasNoTrust(citizen)) {
+      untrusters++;
+      judgePos = i;
+    }
+  }
+
+  if(untrusters != 1) return -1;
+  else return judgePos+1;
+}
+
+public static boolean hasNoTrust(int[] arr) {
+  for(int i = 0 ; i < arr.length ; i++) {
+    if(arr[i] != 0) return false;
+  }
+  return true;
+}
+
+
+    public static boolean hasNoTrust(int[] arr) {
+      for(int i = 0 ; i < arr.length ; i++) {
+        if(arr[i] != 0) return false;
+      }
+      return true;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public class JudgeProblem {
+      public static void main(String[] args) {
+        /* PREMISE:
+           =======
+           One person (node of graph) is secretly town judge
+           Town judge trusts nobody (node only has outward connections)
+           Everyone trusts the town judge (directional graph)
+
+       Adjacency matrix is used here.
+
+       Will be slower than an adjacency list with larger amounts, doesn't require
+       the creation of a node class.
+
+       Each row represents a citizen. Therefore, the judge is the row that trusts none.
+       */
+       int[][] ex1 = {{0, 1},
+                      {0, 0}};
+
+       int[][] ex2 = {{0,0,1},
+                      {0,0,1},
+                      {0,0,0}};
+
+       int[][] ex3 = {{0,0,1},
+                      {0,0,1},
+                      {1,0,0}};
+
+       int[][] ex4 = {{0,1,0},
+                      {0,0,1},
+                      {0,0,0}};
+
+       int[][] ex5 = {{0,0,1,1},
+                      {0,0,1,1},
+                      {0,0,0,0},
+                      {0,0,1,0}};
+
+
+       System.out.println("\nCitizen " + findJudge(2, ex1) + " is judge \n");
+       System.out.println("\nCitizen " + findJudge(3, ex2) + " is judge \n");
+       System.out.println("\nCitizen " + findJudge(3, ex3) + " is judge \n");
+       System.out.println("\nCitizen " + findJudge(3, ex4) + " is judge \n");
+       System.out.println("\nCitizen " + findJudge(4, ex5) + " is judge \n");
+
+        }
+
+        /* FIND JUDGE
+           ==========
+           N is the number of people in town
+           trust[][] is the trust array
+           If judge can be identified, return the label (int)
+           If judge cannot be identified, return -1
+        */
+        public static int findJudge(int N, int [][] trust) {
+          int[] sums = new int[N];
+
+          for(int row = 0; row < N ; row++) {
+            for(int col = 0; col < N ; col++) {
+              sums[row] += trust[row][col];
+
+            }
+          }
+
+          for(int i = 0 ; i < N ; i++) {
+            System.out.print("["+sums[i]+"]");
+          }
+
+          int judges = 0;
+          int judgePos = -1;
+
+          for(int i = 0 ; i < N ; i++) {
+            if(sums[i] == 0) {
+              judges++;
+              judgePos = i;
+            }
+          }
+          if(judges != 1) return -1;
+      //    if(sums[judgePos] != N-1) return -1;
+          return judgePos+1;
+        }
+        /*
+        How a LinkedList-stored version would work:
+        for(int i = 0 ; i < arr.length ; i++) {
+          // If the first item/head of the LinkedList of nodes DNE for a
+            // node, then return that item - it has no trusts.
+          if(arr[i] == null) return [i + 1]
+        }
+        return -1;
+        */
+    }

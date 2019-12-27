@@ -1,0 +1,17 @@
+
+SUBSTITUTION
+  if the current character !DM but the next DM
+  if the current character DM and is the last one
+ADDITION
+  if the previous character matches and the next character matches
+DELETION
+
+
+View diff from the source or trie perspective?
+Trie: if current node does not match, move to next. If next does not match,
+
+
+If node DNE
+  Iterate distance ++
+  Call the function on all children
+  for each child of Node
